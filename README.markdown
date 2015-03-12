@@ -1,0 +1,47 @@
+# GeoIPLookup
+
+An HTTP web service that provides an in-memory lookup for an IP address.
+
+### Runs the app on port 7070
+
+    sbt run
+
+### Testing
+
+    sbt test
+
+### Packaging (fatjar)
+
+    sbt assembly
+
+## Heroku
+
+### To put on heroku
+
+    heroku create
+    git push heroku master
+
+### To run anywhere else
+
+    java -jar target/*-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+
+#### Attribution
+
+* This product includes GeoLite data created by MaxMind, available
+from [http://www.maxmind.com](http://www.maxmind.com).
+
+#### License
+
+   Copyright 2015 n3integration
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
