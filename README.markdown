@@ -3,6 +3,11 @@
 A micro web service that provides a lookup from an IPv4 address to its country of origin,
 if applicable; otherwise, an appropriate response is returned (e.g. `400`, `404`).
 
+#### Request
+```bash
+$ curl http://localhost:7070/1.0.0.1
+```
+
 #### Success
 ```json
 {"status":"ok","country":{"code":"AU","name":"Australia"}}
