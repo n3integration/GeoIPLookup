@@ -21,7 +21,7 @@ import java.io.File
 import java.nio.file.Files
 import java.util.concurrent.atomic.AtomicReference
 
-import com.google.common.base.Splitter
+import com.google.common.base.{Strings, Splitter}
 import com.google.common.collect.{RangeMap, TreeRangeMap}
 import org.n3integration.lookup.geoip.App._
 
@@ -110,11 +110,18 @@ class GeoIPDataStore(cacheDir: String) {
 
 object GeoIPDataStore {
   val GEO_FILE = "GeoIPCountryWhois.csv"
-  val CACHE_DIR = "/usr/local/share/geoip"
+  val CACHE_DIR = cacheDir()
   val GEO_URL = "http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip"
 
-  def apply():GeoIPDataStore = this(CACHE_DIR)
+  def apply():GeoIPDataStore = this(System.getenv("CACHE_DIR") || CACHE_DIR)
   def apply(cacheDir: String) = new GeoIPDataStore(cacheDir)
+
+  private def cacheDir() = {
+    Strings.isNullOrEmpty(System.getenv("CACHE_DIR")) match {
+      case true => "/usr/local/share/geoip"
+      case false => System.getenv("CACHE_DIR")
+    }
+  }
 }
 
 case class IPCountry(code: String, name: String)
