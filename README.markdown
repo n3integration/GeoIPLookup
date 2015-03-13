@@ -17,20 +17,9 @@ if applicable; otherwise, an appropriate response is returned (e.g. `400`, `404`
 
     sbt run
 
-### Testing
-
-    sbt test
-
 ### Packaging (fatjar)
 
     sbt assembly
-
-## Heroku
-
-### To put on heroku
-
-    heroku create
-    git push heroku master
 
 ### To run anywhere else
 
