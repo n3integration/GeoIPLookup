@@ -113,7 +113,7 @@ object GeoIPDataStore {
   val CACHE_DIR = cacheDir()
   val GEO_URL = "http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip"
 
-  def apply():GeoIPDataStore = this(System.getenv("CACHE_DIR") || CACHE_DIR)
+  def apply():GeoIPDataStore = this(CACHE_DIR)
   def apply(cacheDir: String) = new GeoIPDataStore(cacheDir)
 
   private def cacheDir() = {
