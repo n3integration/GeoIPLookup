@@ -17,13 +17,12 @@
 package org.n3integration.lookup.geoip
 
 import java.io._
-import java.util.zip._
 import java.nio.file._
+import java.util.zip._
 
-import sys.process._
-import scala.io.Source
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
-import ExecutionContext.Implicits.global
+import scala.sys.process._
 
 /**
  * Various IO utilities
@@ -39,7 +38,7 @@ object IO {
    *          the target path
    */
   def downloadAndExtract(from: String, to: String) = future {
-    val tmpFile = """/tmp/${from.substring(from.lastIndexOf("/") + 1)}"""
+    val tmpFile = s"""/tmp/${from.substring(from.lastIndexOf("/") + 1)}"""
     IO.download(from, tmpFile)
     IO.unzip(tmpFile, to)
   }
@@ -48,9 +47,9 @@ object IO {
    * Downloads a file from a supported URL (e.g. http[s])
    *
    * @param from
-   *            the source URL
+   *          the source URL
    * @param to
-   *           the target filename
+   *          the target filename
    */
   def download(from: String, to: String) = {
     new java.net.URL(from) #> new File(to) !
@@ -60,9 +59,9 @@ object IO {
    * Unzips the provided file to the specified path
    *
    * @param file
-   *            the source zip archive
+   *          the source zip archive
    * @param to
-   *           the target path
+   *          the target path
    */
   def unzip(file: String, to: String) = {
     val zipFile = new ZipFile(file)
@@ -71,7 +70,12 @@ object IO {
       ZipFileIterator(zipFile).foreach { entry =>
         val instream = zipFile.getInputStream(entry)
         try {
-          Files.copy(instream, new File(s"${to}/${entry.getName()}").toPath(), StandardCopyOption.REPLACE_EXISTING)
+          val toPath = new File(s"${to}/${entry.getName()}").toPath()
+          Files.createDirectories(toPath)
+          Files.copy(instream, toPath, StandardCopyOption.REPLACE_EXISTING)
+        }
+        catch {
+          case e: IOException => println(s"[WARN]: Failed to extract file: ${e.getMessage}")
         }
         finally {
           instream.close()
@@ -87,6 +91,7 @@ object IO {
     val entries = zip.entries()
 
     override def hasNext() = entries.hasMoreElements()
+
     override def next() = entries.nextElement()
   }
 }

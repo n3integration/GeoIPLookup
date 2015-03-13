@@ -1,6 +1,17 @@
 # GeoIPLookup
 
-An HTTP web service that provides an in-memory lookup for an IP address.
+A micro web service that provides a lookup from an IPv4 address to its country of origin,
+if applicable; otherwise, an appropriate response is returned (e.g. `400`, `404`).
+
+#### Success
+```json
+{"status":"ok","country":{"code":"AU","name":"Australia"}}
+```
+
+#### Error
+```json
+{"status":"error","message":"something..."}
+```
 
 ### Runs the app on port 7070
 
