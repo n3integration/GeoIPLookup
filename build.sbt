@@ -1,3 +1,7 @@
+import NativePackagerKeys._
+
+packageArchetype.java_application
+
 name := "geoip"
 
 version := "0.0.1-SNAPSHOT"
@@ -11,3 +15,4 @@ libraryDependencies ++= Seq(
 
 resolvers +=
   "Twitter" at "http://maven.twttr.com"
+
