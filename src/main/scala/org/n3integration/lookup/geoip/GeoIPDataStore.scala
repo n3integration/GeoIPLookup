@@ -18,12 +18,14 @@
 package org.n3integration.lookup.geoip
 
 import java.io.File
+import java.nio.file.Files
 import java.util.concurrent.atomic.AtomicReference
 
 import com.google.common.base.Splitter
 import com.google.common.collect.{RangeMap, TreeRangeMap}
 import org.n3integration.lookup.geoip.App._
 
+import scala.annotation.tailrec
 import scala.io.Source
 
 class GeoIPDataStore(cacheDir: String) {
@@ -74,8 +76,15 @@ class GeoIPDataStore(cacheDir: String) {
 
       localCache.put(range, new IPCountry(stripQuotes(tokens.get(4)), stripQuotes(tokens.get(5))))
     }
+    swapCache(localCache)
+  }
 
-    cache.set(localCache)
+  @tailrec
+  private def swapCache(localCache: RangeMap[JavaLong, IPCountry]):Unit = {
+    val current = cache.get()
+    if(!cache.compareAndSet(current, localCache)) {
+      swapCache(localCache)
+    }
   }
 
   private def createCache() = {
