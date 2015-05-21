@@ -24,28 +24,22 @@ import org.scalatest.matchers.ClassicMatchers
 
 class GeoIPDataStoreSpec extends FlatSpec with ClassicMatchers {
 
-  Resources.copy(getClass().getResource("/GeoIPCountryWhois.csv"), new FileOutputStream("/tmp/GeoIPCountryWhois.csv"))
+  Resources.copy(getClass getResource("/GeoIPCountryWhois.csv"), new FileOutputStream("/tmp/GeoIPCountryWhois.csv"))
 
   val dataStore = GeoIPDataStore("/tmp")
 
   "The GeoIPDataStore" should "respond with home" in {
-    dataStore.lookup(IPv4Address.LOCAL) match {
-      case Some(c: IPCountry) => assert(c.name.contains("Home"))
-      case None => fail("Unable to find local")
-    }
+    dataStore.lookup(IPv4Address.LOCAL)
+      .fold(fail("Unable to find local"))((country) => (assert(country.name.contains("Home"))))
   }
 
   it should "contain AU" in {
-    dataStore.lookup("1.0.0.1") match {
-      case Some(c: IPCountry) => assertResult("AU")(c.code)
-      case None => fail("Unable to find match for country")
-    }
+    dataStore.lookup("1.0.0.1")
+      .fold(fail("Unable to find match for country"))((country) => (assertResult("AU")(country.code)))
   }
 
   it should "not contain private addresses" in {
-    dataStore.lookup("192.168.1.2") match {
-      case None => ""
-      case _ => fail(s"Incorrect response")
-    }
+    dataStore.lookup("192.168.1.2")
+      .fold()((country) => fail(s"Incorrect response: ${country.code}"))
   }
 }

@@ -10,12 +10,24 @@ $ curl http://localhost:7070/1.0.0.1
 
 #### Success
 ```json
-{"status":"ok","country":{"code":"AU","name":"Australia"}}
+{
+  "status": "ok",
+  "response": {
+    "ip": "1.0.0.1",
+    "country": {
+      "code": "AU",
+      "name": "Australia"
+    }
+  }
+}
 ```
 
 #### Error
 ```json
-{"status":"error","message":"something..."}
+{
+  "status": "error",
+  "message": "..."
+}
 ```
 
 ### Runs the app on port 7070

@@ -30,11 +30,9 @@ object App extends FinatraServer {
 
       IPv4Address.isValid(ip) match {
         case true => {
-          dataStore.lookup(ip) match {
-            case Some(c: IPCountry) =>
-              render.json(Map("status" -> "ok", "country" -> c)).toFuture
-            case _ => throw new NotFound
-          }
+          dataStore.lookup(ip)
+            .fold(throw new NotFound)((c) => render.json(
+              Map("status" -> "ok", "response" -> Map("ip" -> ip, "country" -> c))).toFuture)
         }
         case false => throw new InvalidAddress
       }
