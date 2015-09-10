@@ -40,7 +40,7 @@ $ curl http://localhost:7070/1.0.0.1
 
 ### To run anywhere else
 
-    java -jar target/*-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+    java -jar target/*-0.0.1-SNAPSHOT.jar
 
 #### Attribution
 
