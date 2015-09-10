@@ -6,6 +6,7 @@
 .history/
 .lib/
 dist/*
+build/*.jar
 target/
 lib_managed/
 src_managed/
