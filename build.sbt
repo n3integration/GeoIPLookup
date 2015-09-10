@@ -1,6 +1,3 @@
-import NativePackagerKeys._
-
-packageArchetype.java_application
 
 name := "geoip"
 
@@ -16,3 +13,7 @@ libraryDependencies ++= Seq(
 resolvers +=
   "Twitter" at "http://maven.twttr.com"
 
+assemblyMergeStrategy in assembly := {
+  case "BUILD" => MergeStrategy.discard
+  case other => MergeStrategy.defaultMergeStrategy(other)
+}
