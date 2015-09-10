@@ -1,1 +1,0 @@
-web:    target/universal/stage/bin/geoip -Dcom.twitter.finatra.config.env=production -Dcom.twitter.finatra.config.adminPort='' -Dcom.twitter.finatra.config.port=:$PORT -cp target/classes:target/dependency/* org.n3integration.lookup.geoip.App
