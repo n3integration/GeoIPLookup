@@ -17,3 +17,11 @@ assemblyMergeStrategy in assembly := {
   case "BUILD" => MergeStrategy.discard
   case other => MergeStrategy.defaultMergeStrategy(other)
 }
+
+val stageTask = TaskKey[Unit]("stage", "Copies assembly jar to staging location")
+stageTask <<= assembly map { (asm) =>
+  val src = asm.getPath
+  val dst = "build/geoip.jar"
+  println(s"Copying: $src -> $dst")
+  Seq("cp", src, dst) !!
+}
