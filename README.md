@@ -3,6 +3,9 @@
 A micro web service that provides a lookup from an IPv4 address to its country of origin,
 if applicable; otherwise, an appropriate response is returned (e.g. `400`, `404`).
 
+[ ![Codeship Status for n3integration/IPLookup](https://app.codeship.com/projects/d1127f90-d156-0135-6c51-26e28af241d2/status?branch=master)](https://app.codeship.com/projects/262407)
+[![codecov](https://codecov.io/gh/n3integration/IPLookup/branch/master/graph/badge.svg)](https://codecov.io/gh/n3integration/IPLookup)
+
 #### Request
 ```bash
 $ curl http://localhost:7070/1.0.0.1
